@@ -1,0 +1,8 @@
+//
+//  ggmpi.xcconfig
+//  graphgenetic
+//
+//  Created by Alexey Streltsow on 1/18/11.
+//  Copyright 2011 Zila Networks LLC. All rights reserved.
+//
+CC = /usr/bin/mpic++
