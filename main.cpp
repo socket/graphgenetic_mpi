@@ -45,8 +45,13 @@ int main (int argc, char * const argv[]) {
 		gap = GGPopulation::generate(gap, 0, 10);
 	}*/
 	
+	cout << "Parallel graph partitioning genetic algorithm demonstration\n";
+	cout << "Streltsov A.A.\n\n";
+	
 	GGPopulation g = GG_evolve(500, 100, GGIndividual::adj_matrix_size, 60, 30);
 	g.best_ind().print();
+	
+	cout << "\n";
 	
 	return 0;
 }

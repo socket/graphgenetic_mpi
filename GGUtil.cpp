@@ -143,9 +143,9 @@ bool GG_loadMatrixFile(FILE* f, double* &adj, int &n, int &m) {
 		
 		AI(adj, max_index+1, i, j) = tmp[2];
 		AI(adj, max_index+1, j, i) = tmp[2];
-		cout << i << "," << j << " " << tmp[2] << "\n";
+		//cout << i << "," << j << " " << tmp[2] << "\n";
 	}
-	
+	/*
 	cout << "\n";
 	for (int i=0; i<=max_index; i++) {
 		for (int j=0; j<=max_index; j++) {
@@ -153,7 +153,7 @@ bool GG_loadMatrixFile(FILE* f, double* &adj, int &n, int &m) {
 		}
 		cout << "\n";
 	}
-	
+	*/
 	n = m = max_index+1;
 	
 	return true;
