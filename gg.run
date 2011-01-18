@@ -1,0 +1,3 @@
+#!/bin/bash
+/share/mpiexec-0.82/mpiexec ./ggmpi
+
