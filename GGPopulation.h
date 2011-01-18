@@ -28,6 +28,9 @@ public:
 	
 	int	select() const;
 	
+	inline const GGIndividual& best_ind() const {
+		return _ind[_best_index];
+	}
 	
 	int _best_index;
 	int _worst_index;

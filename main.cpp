@@ -38,12 +38,15 @@ int main (int argc, char * const argv[]) {
 	}
 	*/
 	
-	GGPopulation gap(11, GGIndividual::adj_matrix_size);
+	/*GGPopulation gap(11, GGIndividual::adj_matrix_size);
 	
 	for (int i=0; i<200; i++) {
 		gap.print();
 		gap = GGPopulation::generate(gap, 0, 10);
-	}
+	}*/
+	
+	GGPopulation g = GG_evolve(500, 100, GGIndividual::adj_matrix_size, 60, 30);
+	g.best_ind().print();
 	
 	return 0;
 }

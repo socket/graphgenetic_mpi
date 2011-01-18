@@ -107,7 +107,7 @@ GGPopulation GG_evolve(int gens, int pop_size, int nvert, int xrate, int mrate) 
 	GGPopulation gap(pop_size, nvert);
 	
 	for (int i=1; i<gens; i++) {
-		gap.print();
+		//gap.print();
 		gap = GGPopulation::generate(gap, xrate, mrate);
 	}
 	
