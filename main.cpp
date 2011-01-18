@@ -1,9 +1,13 @@
+
+#undef SEEK_SET
+#undef SEEK_END
+#undef SEEK_CUR
+#include <mpi.h>
+
 #include <iostream>
 #include "GGUtil.h"
 #include "GGIndividual.h"
 #include "GGPopulation.h"
-
-#include <mpi.h>
 
 int main (int argc, char **argv) {
 	int taskid = -1;
