@@ -34,6 +34,7 @@ void GG_printset(const vertex_set& s) ;
 
 bool GG_randboolean();
 int	 GG_randint(int max);
+void GG_genMatrix(double* &adj, int size );
 
 #endif //_GG_Util_h
 

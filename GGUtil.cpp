@@ -83,6 +83,28 @@ void GG_printset(const vertex_set& s) {
 	cout << ']';
 }
 
+void GG_genMatrix(double* &adj, int size ) {
+	adj = (double*)malloc( size* size* sizeof( double ) );
+	memset(adj, 0, size*size*sizeof(double));
+	
+	for(int i=0; i<size; i++) {
+		for(int j=0; j<size; j++) {
+			if (i == j) {
+				adj[i*size+j] = 0.0f;
+			}
+			else if (i+1 == j-1) {
+				adj[i*size+j] = 1;
+				adj[j*size+i] = 1;	
+			}
+			else {
+				bool rnd = GG_randboolean();
+				adj[i*size+j] = rnd?1:0;
+				adj[j*size+i] = rnd?1:0;	
+			}
+		}
+	}
+}
+
 bool GG_loadMatrixFile(FILE* f, double* &adj, int &n, int &m) {
 	if ( !f ) {
 		cerr << "load matrix file failed";

@@ -31,13 +31,27 @@ int main (int argc, char **argv) {
 	
 	fclose(f);
 
+	if (FILE* ff = fopen("random", "r") ) {
+		char buff[128];
+		fgets(buff, 128, ff);
+		int size = atoi(buff);
+		fclose(ff);
+		if ( size<5) size = 10;
+		
+		GGIndividual::adj_matrix_size = size;
+		GG_genMatrix(GGIndividual::adj_matrix, GGIndividual::adj_matrix_size);
+	}
+		
 	if ( taskid == 0 ) {
 		cout << "Parallel graph partitioning genetic algorithm demonstration\n";
 		cout << "Streltsov A.A.\n\n";
 	}
 	
-	GGPopulation g = GG_evolve(500, 100, GGIndividual::adj_matrix_size, 60, 30);
-	g.best_ind().print();
+	GGPopulation g = GG_evolve(100, 50, GGIndividual::adj_matrix_size, 60, 30);
+	
+	if ( taskid == 0 ) {
+		g.best_ind().print();
+	}
 	
 	cout << "\n";
 	
