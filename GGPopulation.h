@@ -37,4 +37,6 @@ public:
 	void print() const;
 };
 
+GGPopulation GG_evolve(int gens, int pop_size, int nvert, int xrate, int mrate);
+
 #endif //_GG_Population_h

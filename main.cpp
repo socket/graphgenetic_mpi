@@ -19,6 +19,9 @@ int main (int argc, char * const argv[]) {
 	*/
 	
 	FILE *f = fopen("../../graph.txt", "r");
+	if (!f) {
+		f = fopen("graph.txt", "r");
+	}
 	GG_loadMatrixFile(f, GGIndividual::adj_matrix, GGIndividual::adj_matrix_size, GGIndividual::adj_matrix_size);
 	
 	fclose(f);

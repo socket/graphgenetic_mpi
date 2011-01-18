@@ -11,6 +11,7 @@ const int LINE_BUFFER_SIZE = 0xFF;
 #define AI(arr, size, i, j) arr[i*(size) + j]
 
 #include "GGUtil.h"
+#include "GGPopulation.h"
 
 vertex_set GG_picklist2perm(vertex_set& pl) {
 	vertex_set perm;
@@ -165,4 +166,5 @@ bool GG_randboolean() {
 int	GG_randint(int max) {
 	return rand()%max;
 }
+
 

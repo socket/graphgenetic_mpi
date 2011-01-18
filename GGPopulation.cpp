@@ -102,3 +102,14 @@ void GGPopulation::print() const {
 	_ind[_worst_index].print();
 	cout << "  " << _avr_fitness << ">\n";
 }
+
+GGPopulation GG_evolve(int gens, int pop_size, int nvert, int xrate, int mrate) {
+	GGPopulation gap(pop_size, nvert);
+	
+	for (int i=1; i<gens; i++) {
+		gap.print();
+		gap = GGPopulation::generate(gap, xrate, mrate);
+	}
+	
+	return gap;
+}
