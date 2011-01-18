@@ -47,3 +47,4 @@ public:
 };
 
 #endif //_GG_Individual_h
+

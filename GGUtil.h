@@ -36,3 +36,4 @@ bool GG_randboolean();
 int	 GG_randint(int max);
 
 #endif //_GG_Util_h
+

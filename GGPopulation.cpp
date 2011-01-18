@@ -113,3 +113,4 @@ GGPopulation GG_evolve(int gens, int pop_size, int nvert, int xrate, int mrate) 
 	
 	return gap;
 }
+
