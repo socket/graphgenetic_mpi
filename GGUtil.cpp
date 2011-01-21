@@ -104,7 +104,7 @@ void GG_genMatrix(double* &adj, int size ) {
 		}
 	}
 	*/
-	for (int k=0; k<size*3; k++) {
+	for (int k=0; k<size*2; k++) {
 		int i = GG_randint(size);
 		int j = GG_randint(size);
 		adj[i*size+j] = 1;

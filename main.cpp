@@ -84,7 +84,7 @@ int main (int argc, char **argv) {
 	
 	char mpi_finish = 1;
 	int xsize = 1024*1024*1024;
-	char *xbuff = (char*)malloc(xsize);
+//	char *xbuff = (char*)malloc(xsize);
 	
 	for (int i=1; i<numGens; i++) {
 		gap = GGPopulation::generate(gap, xrate, mrate);
