@@ -85,7 +85,6 @@ int main (int argc, char **argv) {
 	char mpi_finish = 1;
 	int xsize = 1024*1024*1024;
 	char *xbuff = (char*)malloc(xsize);
-	char *xxbuff = (char*)malloc(xsize);
 	
 	for (int i=1; i<numGens; i++) {
 		gap = GGPopulation::generate(gap, xrate, mrate);
@@ -111,6 +110,7 @@ int main (int argc, char **argv) {
 				}
 			}
 			gap.best_ind().print();
+			cout << "\n";
 			break;
 		}
 		
@@ -119,10 +119,10 @@ int main (int argc, char **argv) {
 		MPI_Iprobe(MPI_ANY_SOURCE, 555, MPI_COMM_WORLD, &memflag, &status);
 		if ( memflag ) {
 			MPI_Recv(xbuff, xsize, MPI_CHAR, MPI_ANY_SOURCE, 555, MPI_COMM_WORLD, &status);
-			//GGIndividual ind = GGIndividual::deserialize(xbuff, xsize);
-			//gap._ind[gap._worst_index] = ind;
+			GGIndividual ind = GGIndividual::deserialize(xbuff, xsize);
+			gap._ind[gap._worst_index] = ind;
+			cout << "#" << taskid << "::" << "received new individual fitness=" << ind.fitness() << "\n";
 		}
-		
 		
 		// send best individual to everyone
 		MPI_Request ireq;
