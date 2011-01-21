@@ -86,7 +86,7 @@ int main (int argc, char **argv) {
 		MPI_Iprobe(MPI_ANY_SOURCE, 1111, MPI_COMM_WORLD, &flag, &status);
 		if ( flag ) {
 			found = true;
-			cout << "#" << taskid << ":: terminating further computations\n";
+			//cout << "#" << taskid << ":: terminating further computations\n";
 			break;
 		}
 		
