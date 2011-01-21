@@ -86,7 +86,7 @@ void GG_printset(const vertex_set& s) {
 void GG_genMatrix(double* &adj, int size ) {
 	adj = (double*)malloc( size* size* sizeof( double ) );
 	memset(adj, 0, size*size*sizeof(double));
-	
+	/*
 	for(int i=0; i<size; i++) {
 		for(int j=0; j<size; j++) {
 			if (i == j) {
@@ -102,6 +102,13 @@ void GG_genMatrix(double* &adj, int size ) {
 				adj[j*size+i] = rnd?1:0;	
 			}
 		}
+	}
+	*/
+	for (int k=0; k<size*3; k++) {
+		int i = GG_randint(size);
+		int j = GG_randint(size);
+		adj[i*size+j] = 1;
+		adj[j*size+i] = 1;
 	}
 }
 
