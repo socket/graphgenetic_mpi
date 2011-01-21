@@ -130,8 +130,8 @@ int main (int argc, char **argv) {
 		gap.best_ind().serialize(ibuff, isize);		
 		for (int t=0; t<numtasks; t++) {
 			if ( t != taskid ) {
-				MPI_Isend(ibuff, isize, MPI_CHAR, t, 555, MPI_COMM_WORLD, &ireq);
-				
+				//MPI_Isend(ibuff, isize, MPI_CHAR, t, 555, MPI_COMM_WORLD, &ireq);
+				MPI_Send(ibuff, isize, MPI_CHAR, 5, 555, MPI_COMM_WORLD);
 			}
 		}
 	}

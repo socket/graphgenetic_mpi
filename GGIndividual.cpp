@@ -59,7 +59,7 @@ void GGIndividual::serialize(char* &buff, int &size) const {
 	r = _right.size();
 	ps = _picklist.size();
 	
-	size = sizeof(int) * _picklist.size() + 2 ;
+	size = sizeof(int) * _picklist.size() + 36;
 	
 	buff = (char*)malloc( size );
 	memcpy(buff, &l, sizeof(int));
