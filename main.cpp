@@ -114,7 +114,7 @@ int main (int argc, char **argv) {
 			break;
 		}
 		
-		/*
+		
 		int memflag;
 		MPI_Iprobe(MPI_ANY_SOURCE, 555, MPI_COMM_WORLD, &memflag, &status);
 		if ( memflag ) {
@@ -122,7 +122,7 @@ int main (int argc, char **argv) {
 			//GGIndividual ind = GGIndividual::deserialize(xbuff, xsize);
 			//gap._ind[gap._worst_index] = ind;
 		}
-		*/
+		
 		
 		// send best individual to everyone
 		MPI_Request ireq;
