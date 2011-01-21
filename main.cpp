@@ -80,17 +80,17 @@ int main (int argc, char **argv) {
 	for (int i=1; i<numGens; i++) {
 		gap = GGPopulation::generate(gap, xrate, mrate);
 		
-		if (gap.best_ind().fitness() >= (1.0f/(1.0f+criteria)) ) {
-			cout << "#" << taskid << ":: Found criteria match\n";
-			MPI_Bcast(&mpi_finish, 1, MPI_CHAR, 0, MPI_COMM_WORLD);
-			gap.best_ind().print();
-			break;
-		}
-		
 		int flag;
 		MPI_Iprobe(MPI_ANY_SOURCE, 1111, MPI_COMM_WORLD, &flag, &status);
 		if ( flag ) {
 			cout << "#" << taskid << ":: terminating further computations\n";
+			break;
+		}
+		
+		if (gap.best_ind().fitness() >= (1.0f/(1.0f+criteria)) ) {
+			cout << "#" << taskid << ":: Found criteria match on iteration=" << i << "/" << numGens << "\n";
+			MPI_Bcast(&mpi_finish, 1, MPI_CHAR, 0, MPI_COMM_WORLD);
+			gap.best_ind().print();
 			break;
 		}
 	}
