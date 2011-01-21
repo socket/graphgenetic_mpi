@@ -13,7 +13,6 @@ int main (int argc, char **argv) {
 	int taskid = -1;
 	int numtasks = -1;
 	
-	double xtime = MPI_Wtime();
 	
 	if ( MPI_Init(&argc, &argv) != MPI_SUCCESS ) {
 		cout << "MPI init failed";
@@ -22,6 +21,9 @@ int main (int argc, char **argv) {
 		MPI_Comm_rank(MPI_COMM_WORLD, &taskid);
 		MPI_Comm_size(MPI_COMM_WORLD, &numtasks);
 	}
+	
+	double xtime = MPI_Wtime();
+
 	
 	srand(time(NULL));
 	int msize;
