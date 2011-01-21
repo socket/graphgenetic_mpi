@@ -44,8 +44,8 @@ public:
 	
 	void print() const;
 	
-	void serialize(char* &buff, int &size);
-	void deserialize(char *buff, int size);
+	void serialize(char* &buff, int &size) const;
+	static GGIndividual deserialize(char *buff, int size);
 	
 };
 

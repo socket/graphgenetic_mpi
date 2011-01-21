@@ -53,21 +53,48 @@ GGIndividual::GGIndividual(const vertex_set& l, const vertex_set& r) {
 	evalFitness();
 }
 
-void GGIndividual::serialize(char* &buff, int &size) {
+void GGIndividual::serialize(char* &buff, int &size) const {
 	int l, r, ps;
 	l = _left.size();
 	r = _right.size();
 	ps = _picklist.size();
 	
-	buff = (char*)malloc( sizeof(int) * _picklist.size() + 2 );
+	size = sizeof(int) * _picklist.size() + 2 ;
+	
+	buff = (char*)malloc( size );
 	memcpy(buff, &l, sizeof(int));
 	memcpy(buff+4, &r, sizeof(int));
 	memcpy(buff+8, &ps, sizeof(int));
 	memcpy(buff+12, &_picklist[0], sizeof(int)*ps);
+	
 }
 
-void GGIndividual::deserialize(char *buff, int size) {
+GGIndividual GGIndividual::deserialize(char *buff, int size) {
+	int l, r, ps;
+	memcpy(&l, buff, 4);
+	memcpy(&r, buff+4, 4);
+	memcpy(&ps, buff+8, 4);
 	
+	vertex_set _left;
+	vertex_set _right;
+	vertex_set _picklist;
+	
+	_picklist.reserve(ps);
+	_left.reserve(l);
+	_right.reserve(r);
+	
+	memcpy(&_picklist[0], buff+12, ps*4);
+	
+	vertex_set tmp = GG_picklist2perm(_picklist);
+	
+	for (int i=0; i<_left.size(); i++) {
+		_left[i] = tmp[i];
+	}
+	for (int i=0; i<_right.size(); i++) {
+		_right[i] = tmp[_right.size()+i];
+	}
+	
+	return GGIndividual(_left, _right);
 }
 
 

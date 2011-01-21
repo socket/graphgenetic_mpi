@@ -16,11 +16,12 @@ typedef std::vector<GGIndividual> individual_list;
 
 class GGPopulation {
 	int							_popsize;			// population size	
-	individual_list _ind;
 	
 	void evaluate();
 	
 public:
+	individual_list _ind;
+
 	GGPopulation(int size, int nvert);
 	GGPopulation(const individual_list& individuals);
 	
@@ -30,6 +31,10 @@ public:
 	
 	inline const GGIndividual& best_ind() const {
 		return _ind[_best_index];
+	}
+
+	inline const GGIndividual& worst_ind() const {
+		return _ind[_worst_index];
 	}
 	
 	int _best_index;

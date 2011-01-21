@@ -83,6 +83,9 @@ int main (int argc, char **argv) {
 	bool found = false;
 	
 	char mpi_finish = 1;
+	int xsize = 1024*1024*1024;
+	char *xbuff = (char*)malloc(xsize);
+	
 	for (int i=1; i<numGens; i++) {
 		gap = GGPopulation::generate(gap, xrate, mrate);
 		
@@ -106,15 +109,36 @@ int main (int argc, char **argv) {
 			gap.best_ind().print();
 			break;
 		}
+		
+		int memflag;
+		MPI_Iprobe(MPI_ANY_SOURCE, 555, MPI_COMM_WORLD, &memflag, &status);
+		if ( memflag ) {
+			MPI_Recv(xbuff, xsize, MPI_CHAR, MPI_ANY_SOURCE, 555, MPI_COMM_WORLD, &status);
+			GGIndividual ind = GGIndividual::deserialize(xbuff, xsize);
+			gap._ind[gap._worst_index] = ind;
+		}
+		
+		// send best individual to everyone
+		MPI_Request ireq;
+		char *ibuff;
+		int isize;
+		gap.best_ind().serialize(ibuff, isize);
+		
+		for (int t=0; t<numtasks; t++) {
+			if ( t != taskid ) {
+				MPI_Isend(ibuff, isize, MPI_CHAR, t, 555, MPI_COMM_WORLD, &ireq);
+			}
+		}
 	}
 	
 	if (!found) {
 		cout << "criteria match failed" << "\n";
 		gap.best_ind().print();		
+		
+		xtime = MPI_Wtime() - xtime;
+		cout << "#" << taskid << ":: time=" << xtime << "\n";
 	}
 	
-	xtime = MPI_Wtime() - xtime;
-	cout << "#" << taskid << ":: time=" << xtime << "\n";
 	
 	MPI_Finalize();
 	
