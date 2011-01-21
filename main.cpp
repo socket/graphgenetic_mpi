@@ -89,7 +89,7 @@ int main (int argc, char **argv) {
 			break;
 		}
 		
-		if (gap.best_ind().fitness() >= (1.0f/(1.0f+criteria)) ) {
+		if (gap.best_ind().fitness() >= (1.0f/(1.0f+criteria) - 0.00001) ) {
 			cout << "#" << taskid << ":: Found criteria match on iteration=" << i << "/" << numGens << "\n";
 			found = true;
 			for (int t=0; t<numtasks; t++) {
