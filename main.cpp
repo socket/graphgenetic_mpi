@@ -48,7 +48,7 @@ int main (int argc, char **argv) {
 			GG_genMatrix(GGIndividual::adj_matrix, GGIndividual::adj_matrix_size);
 		}
 		msize = GGIndividual::adj_matrix_size;
-		for (int i=0; i<numtasks; ++i) {
+		for (int i=1; i<numtasks; ++i) {
 			MPI_Send(&msize, 1, MPI_INT, i, 1, MPI_COMM_WORLD);
 			MPI_Send(GGIndividual::adj_matrix, msize*msize, MPI_DOUBLE, i, 2, MPI_COMM_WORLD);
 		}
