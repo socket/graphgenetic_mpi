@@ -44,12 +44,9 @@ int main (int argc, char **argv) {
 		fclose(f);
 
 		if (FILE* ff = fopen("random", "r") ) {
-			char buff[128];
-			fgets(buff, 128, ff);
-			int size = atoi(buff);
-			fclose(ff);
-			if ( size<5) size = 10;
+			int size;
 			fscanf(ff, "%d,%d,%d,%d,%d,%d", &size, &criteria, &numGens, &genSize, &mrate, &xrate);
+			fclose(ff);
 			
 			GGIndividual::adj_matrix_size = size;
 			GG_genMatrix(GGIndividual::adj_matrix, GGIndividual::adj_matrix_size);
