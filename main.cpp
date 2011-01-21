@@ -90,6 +90,13 @@ int main (int argc, char **argv) {
 		if (gap.best_ind().fitness() >= (1.0f/(1.0f+criteria)) ) {
 			cout << "#" << taskid << ":: Found criteria match on iteration=" << i << "/" << numGens << "\n";
 			
+			for (int i=0; i<numtasks; i++) {
+				MPI_Request req;
+				if ( i != taskid ) {
+					MPI_Isend(&mpi_finish, 1, MPI_CHAR, i, 1111, MPI_COMM_WORLD, &req);
+				}
+			}
+			
 			MPI_Bcast(&mpi_finish, 1, MPI_CHAR, 0, MPI_COMM_WORLD);
 			gap.best_ind().print();
 			break;
