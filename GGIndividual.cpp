@@ -53,6 +53,24 @@ GGIndividual::GGIndividual(const vertex_set& l, const vertex_set& r) {
 	evalFitness();
 }
 
+void serialize(char* &buff, int &size) {
+	int l, r, ps;
+	l = _left.size();
+	r = _right.size();
+	ps = _picklist.size();
+	
+	buff = (char*)malloc( sizeof(int) * _picklist.size() + 2 );
+	memcpy(buff, &l, sizeof(int));
+	memcpy(buff+4, &r, sizeof(int));
+	memcpy(buff+8, &ps, sizeof(int));
+	memcpy(buff+12, &_picklist[0], sizeof(int)*ps);
+}
+
+void deserialize(char *buff, int size) {
+	
+}
+
+
 void GGIndividual::print() const {
 	cout << "{ ";
 	GG_printset(_left);

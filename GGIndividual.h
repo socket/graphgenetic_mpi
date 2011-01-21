@@ -44,6 +44,9 @@ public:
 	
 	void print() const;
 	
+	void serialize(char* &buff, int &size);
+	void deserialize(char *buff, int size);
+	
 };
 
 #endif //_GG_Individual_h

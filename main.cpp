@@ -76,6 +76,8 @@ int main (int argc, char **argv) {
 //	GGPopulation g = GG_evolve(numGens, genSize, GGIndividual::adj_matrix_size, mrate, xrate);
 	GGPopulation gap(genSize, GGIndividual::adj_matrix_size);
 	
+	bool found = false;
+	
 	char mpi_finish = 1;
 	for (int i=1; i<numGens; i++) {
 		gap = GGPopulation::generate(gap, xrate, mrate);
@@ -83,24 +85,27 @@ int main (int argc, char **argv) {
 		int flag;
 		MPI_Iprobe(MPI_ANY_SOURCE, 1111, MPI_COMM_WORLD, &flag, &status);
 		if ( flag ) {
-			cout << "#" << taskid << ":: terminating further computations\n";
+			//cout << "#" << taskid << ":: terminating further computations\n";
 			break;
 		}
 		
 		if (gap.best_ind().fitness() >= (1.0f/(1.0f+criteria)) ) {
 			cout << "#" << taskid << ":: Found criteria match on iteration=" << i << "/" << numGens << "\n";
-			
+			found = true;
 			for (int i=0; i<numtasks; i++) {
 				MPI_Request req;
 				if ( i != taskid ) {
 					MPI_Isend(&mpi_finish, 1, MPI_CHAR, i, 1111, MPI_COMM_WORLD, &req);
 				}
 			}
-			
-			MPI_Bcast(&mpi_finish, 1, MPI_CHAR, 0, MPI_COMM_WORLD);
 			gap.best_ind().print();
 			break;
 		}
+	}
+	
+	if (!found) {
+		cout << "criteria match failed" << "\n";
+		gap.best_ind().print();		
 	}
 	
 	cout << "\n";
