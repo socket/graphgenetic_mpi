@@ -25,6 +25,12 @@ int main (int argc, char **argv) {
 	int msize;
 	MPI_Status status;
 	
+	int numGens = 100;
+	int genSize = 50;
+	int mrate = 30;
+	int xrate = 60;
+	int criteria = 0;
+	
 	if ( taskid == 0 ) {
 		cout << "Parallel graph partitioning genetic algorithm demonstration\n";
 		cout << "Streltsov A.A.\n\n";
@@ -43,10 +49,12 @@ int main (int argc, char **argv) {
 			int size = atoi(buff);
 			fclose(ff);
 			if ( size<5) size = 10;
+			fscanf(ff, "%d,%d,%d,%d,%d,%d", &size, &criteria, &numGens, &genSize, &mrate, &xrate);
 			
 			GGIndividual::adj_matrix_size = size;
 			GG_genMatrix(GGIndividual::adj_matrix, GGIndividual::adj_matrix_size);
 		}
+		
 		msize = GGIndividual::adj_matrix_size;
 		for (int i=1; i<numtasks; ++i) {
 			MPI_Send(&msize, 1, MPI_INT, i, 1, MPI_COMM_WORLD);
@@ -64,10 +72,18 @@ int main (int argc, char **argv) {
 	  cout << "#" << taskid << " received problem matrix of size=" << msize << "\n";
 	}
 		
-	GGPopulation g = GG_evolve(100, 50, GGIndividual::adj_matrix_size, 60, 30);
+//	GGPopulation g = GG_evolve(numGens, genSize, GGIndividual::adj_matrix_size, mrate, xrate);
+	GGPopulation gap(genSize, GGIndividual::adj_matrix_size);
 	
-	if ( taskid == 0 ) {
-		g.best_ind().print();
+	char mpi_finish;
+	for (int i=1; i<numGens; i++) {
+		gap = GGPopulation::generate(gap, xrate, mrate);
+		
+		if (gap.best_ind().fitness() >= (1.0f/(1.0f+criteria)) ) {
+			cout << "#" << taskid << ":: Found criteria match\n";
+			gap.best_ind().print();
+			break;
+		}
 	}
 	
 	cout << "\n";
