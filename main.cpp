@@ -99,6 +99,9 @@ int main (int argc, char **argv) {
 		
 		if (gap.best_ind().fitness() >= (1.0f/(1.0f+criteria) - 0.00001) ) {
 			cout << "#" << taskid << ":: Found criteria match on iteration=" << i << "/" << numGens << "\n";
+			xtime = MPI_Wtime() - xtime;
+			cout << "#" << taskid << ":: time=" << xtime << "\n";
+			
 			found = true;
 			for (int t=0; t<numtasks; t++) {
 				MPI_Request req;
@@ -114,16 +117,15 @@ int main (int argc, char **argv) {
 		MPI_Iprobe(MPI_ANY_SOURCE, 555, MPI_COMM_WORLD, &memflag, &status);
 		if ( memflag ) {
 			MPI_Recv(xbuff, xsize, MPI_CHAR, MPI_ANY_SOURCE, 555, MPI_COMM_WORLD, &status);
-			GGIndividual ind = GGIndividual::deserialize(xbuff, xsize);
-			gap._ind[gap._worst_index] = ind;
+			//GGIndividual ind = GGIndividual::deserialize(xbuff, xsize);
+			//gap._ind[gap._worst_index] = ind;
 		}
 		
 		// send best individual to everyone
 		MPI_Request ireq;
 		char *ibuff;
 		int isize;
-		gap.best_ind().serialize(ibuff, isize);
-		
+		gap.best_ind().serialize(ibuff, isize);		
 		for (int t=0; t<numtasks; t++) {
 			if ( t != taskid ) {
 				MPI_Isend(ibuff, isize, MPI_CHAR, t, 555, MPI_COMM_WORLD, &ireq);
