@@ -86,7 +86,6 @@ int main (int argc, char **argv) {
 	int xsize = 1024*1024*1024;
 	char *xbuff = (char*)malloc(xsize);
 	char *xxbuff = (char*)malloc(xsize);
-	MPI_Buffer_attach(xxbuff, xsize);
 	
 	for (int i=1; i<numGens; i++) {
 		gap = GGPopulation::generate(gap, xrate, mrate);
@@ -132,8 +131,10 @@ int main (int argc, char **argv) {
 		gap.best_ind().serialize(ibuff, isize);		
 		for (int t=0; t<numtasks; t++) {
 			if ( t != taskid ) {
+				MPI_Status sts;
 				//MPI_Isend(ibuff, isize, MPI_CHAR, t, 555, MPI_COMM_WORLD, &ireq);
-				MPI_Ibsend(ibuff, isize, MPI_CHAR, 5, 555, MPI_COMM_WORLD, &ireq);
+				MPI_Isend(ibuff, isize, MPI_CHAR, 5, 555, MPI_COMM_WORLD, &ireq);
+				MPI_Wait(&ireq, &sts);
 			}
 		}
 	}
