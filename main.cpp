@@ -23,6 +23,7 @@ int main (int argc, char **argv) {
 	
 	srand(time(NULL));
 	int msize;
+	MPI_Status status;
 	
 	if ( taskid == 0 ) {
 		cout << "Parallel graph partitioning genetic algorithm demonstration\n";
@@ -51,12 +52,12 @@ int main (int argc, char **argv) {
 		MPI_Send(GGIndividual::adj_matrix, msize*msize, MPI_DOUBLE, 0, 2, MPI_COMM_WORLD);
 	}
 	else {
-		MPI_Recv(&msize, 1, MPI_INT, 0, 1, MPI_COMM_WORLD, NULL);
+		MPI_Recv(&msize, 1, MPI_INT, 0, 1, MPI_COMM_WORLD, &status);
 		
 		GGIndividual::adj_matrix = (double*)malloc(sizeof(double)*msize*msize);
 		GGIndividual::adj_matrix_size = msize;
 		
-		MPI_Recv(GGIndividual::adj_matrix, msize*msize, MPI_DOUBLE, 0, 2, MPI_COMM_WORLD, NULL);
+		MPI_Recv(GGIndividual::adj_matrix, msize*msize, MPI_DOUBLE, 0, 2, MPI_COMM_WORLD, &status);
 		
 	  cout << "#" << taskid << " received problem matrix of size=" << msize << "\n";
 	}
