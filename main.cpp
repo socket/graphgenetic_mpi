@@ -114,7 +114,7 @@ int main (int argc, char **argv) {
 			break;
 		}
 		
-		
+		/*
 		int memflag;
 		MPI_Iprobe(MPI_ANY_SOURCE, 555, MPI_COMM_WORLD, &memflag, &status);
 		if ( memflag ) {
@@ -137,6 +137,7 @@ int main (int argc, char **argv) {
 				MPI_Wait(&ireq, &sts);
 			}
 		}
+	*/
 	}
 	
 	if (!found) {
