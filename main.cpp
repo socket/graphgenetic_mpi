@@ -50,6 +50,10 @@ int main (int argc, char **argv) {
 			
 			GGIndividual::adj_matrix_size = size;
 			GG_genMatrix(GGIndividual::adj_matrix, GGIndividual::adj_matrix_size);
+			
+			cout << "RNDMATRIX rank=" << size << "\n";
+			cout << "criteria=" << criteria << " gens=" << numGens << " size=" << genSize << "\n";
+			cout << "mrate=" << mrate << " xrate=" << xrate;
 		}
 		
 		msize = GGIndividual::adj_matrix_size;
