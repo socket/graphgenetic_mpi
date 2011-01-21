@@ -13,6 +13,8 @@ int main (int argc, char **argv) {
 	int taskid = -1;
 	int numtasks = -1;
 	
+	double xtime = MPI_Wtime();
+	
 	if ( MPI_Init(&argc, &argv) != MPI_SUCCESS ) {
 		cout << "MPI init failed";
 	}
@@ -109,7 +111,8 @@ int main (int argc, char **argv) {
 		gap.best_ind().print();		
 	}
 	
-	cout << "\n";
+	xtime = MPI_Wtime() - xtime;
+	cout << "#" << taskid << ":: time=" << xtime << "\n";
 	
 	MPI_Finalize();
 	
